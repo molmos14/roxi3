@@ -7,6 +7,7 @@ import math
 
 class Rober(ss.SearchProblem):
     def __init__(self, Terreno):
+        # Inicializa el robot en una posición aleatoria
         self.robot_x = 0
         self.robot_y = 0
         self.robot_nivel = 0
@@ -18,12 +19,14 @@ class Rober(ss.SearchProblem):
 
 
     def colocar_robot(self):
+        # Coloca el robot en una posición aleatoria
         self.robot_x = random.randint(1, self.Terreno.filas)
         self.robot_y = random.randint(1, self.Terreno.columnas)
         self.robot_nivel = random.randint(1, 6)
         self.Terreno.matriz[self.robot_x][self.robot_y] = 'R'
 
     def actions(self, state):
+        # Devuelve las acciones que se pueden ejecutar en un estado
         acciones = []
         x, y, nivel = state
 
@@ -45,51 +48,55 @@ class Rober(ss.SearchProblem):
 
         caracteres = ["R", "#", "*", "-", " "]
 
-        # VERIFICAR LOS CONDICIONALES, SI REALMENTE SON NECESARIOS
+        num = abs(nivel - int(arriba)) if isinstance(arriba, str) and arriba.isdigit() else 0
         if arriba not in caracteres and arriba != '*' and arriba != '#':
-            if arriba != '-' and abs(nivel - int(arriba)) <= 1:
+            if arriba != '-' and num <= 1:
                 acciones.append('⬆')
 
         elif arriba == "-":
             acciones.append('⬆')
 
-        # me lanzó un error -> TypeError: unsupported operand type(s) for -: 'str' and 'int'
+        num = abs(nivel - int(abajo)) if isinstance(abajo, str) and abajo.isdigit() else 0
         if abajo not in caracteres and abajo != '*' and abajo != '#':
-            if abajo != '-' and abs(nivel - int(abajo)) <= 1:
+            if abajo != '-' and num <= 1:
                 acciones.append('⬇')
 
         elif abajo == "-":
             acciones.append('⬇')
 
+        num = abs(nivel - int(derecha_arriba)) if isinstance(derecha_arriba, str) and derecha_arriba.isdigit() else 0
         if derecha_arriba not in caracteres and derecha_arriba != '*' and derecha_arriba != '#':
-            if abs(nivel - int(derecha_arriba)) <= 1:
+            if num <= 1:
                 acciones.append('⬈')
 
         elif derecha_arriba == "-":
             acciones.append('⬈')
 
+        num = abs(nivel - int(derecha_abajo)) if isinstance(derecha_abajo, str) and derecha_abajo.isdigit() else 0
         if derecha_abajo not in caracteres and derecha_abajo != '*' and derecha_abajo != '#':
-            if abs(nivel - int(derecha_abajo)) <= 1:
+            if num <= 1:
                 acciones.append('⬊')
 
         elif derecha_abajo == "-":
             acciones.append('⬊')
 
+        num = abs(nivel - int(izquierda_arriba)) if isinstance(izquierda_arriba, str) and izquierda_arriba.isdigit() else 0
         if izquierda_arriba not in caracteres and izquierda_arriba != '*' and izquierda_arriba != '#':
-            if abs(nivel - int(izquierda_arriba)) <= 1:
+            if num <= 1:
                 acciones.append('⬉')
 
         elif izquierda_arriba == "-":
             acciones.append('⬉')
 
+        num = abs(nivel - int(izquierda_abajo)) if isinstance(izquierda_abajo, str) and izquierda_abajo.isdigit() else 0
         if izquierda_abajo not in caracteres and izquierda_abajo != '*' and izquierda_abajo != '#':
-            if abs(nivel - int(izquierda_abajo)) <= 1:
+            if num <= 1:
                 acciones.append('⬋')
 
         elif izquierda_abajo == "-":
             acciones.append('⬋')
 
-        # print(acciones)
+        print(acciones)
         return acciones
 
     def heuristic(self, state):
@@ -100,19 +107,13 @@ class Rober(ss.SearchProblem):
 
     def cost(self, state, action, state2 = None):
         # Incrementa el costo si el nivel del robot y el nivel del estado objetivo son diferentes
-        # print(state)
-        # x1, y1, _ = state
         if state is None:
             raise ValueError("State cannot be None")
         x2, y2, _ = self.result(state, action)
         next_level = self.Terreno.matriz[x2][y2]
         current_level = self.robot_nivel
-        # print(f'curr -> {x1},{y1}')
-        # print(self.robot_nivel)
-        # print(f'next -> {x2},{y2}')
-        # print(next_level)
-        
         caracteres_especiales = ["#", "*", "R", "-", " "]
+
         if next_level in caracteres_especiales:
             return 0
         elif next_level == current_level:
@@ -126,12 +127,13 @@ class Rober(ss.SearchProblem):
         return next_level
 
     def is_goal(self, state):
+        # is_goal es True si el estado es el agua objetivo
         x, y, nivel = state
-        # print(state)
         return self.Terreno.matriz[x][y] == '-'
 
 
     def result(self, state, action):
+        # Devuelve el estado resultante de ejecutar una acción en un estado
         x, y, nivel = state
 
         if action == '⬆':

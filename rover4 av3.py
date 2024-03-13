@@ -17,13 +17,13 @@ rober = Rober.Rober(terreno)
 
 # Búsquedas locales
 
-#print("Estado inicial:")
-#print(rober.initial_state)
-#output = ss.hill_climbing(rober)
-#output = ss.hill_climbing_random_restarts(rober,500) #el que corre mejor
-#output = ss.simulated_annealing(rober,temperature)
-#output = ss.simulated_annealing(rober,_exp_schedule)
-# print("Robert está en: " + str(rober.robot_nivel))
+print("Estado inicial:")
+print(rober.initial_state)
+output = ss.hill_climbing(rober)
+output = ss.hill_climbing_random_restarts(rober,500) #el que corre mejor
+output = ss.simulated_annealing(rober,temperature)
+output = ss.simulated_annealing(rober,_exp_schedule)
+print("Robert está en: " + str(rober.robot_nivel))
 
 #BFS
 
@@ -51,9 +51,11 @@ rober = Rober.Rober(terreno)
 # print("Robert está en: " + str(rober.robot_nivel))
 # if result is not None and result.path() != 'NoneType':
 #     print(f"\nNumero de movimientos: {len(result.path())-1}")
-# for action, next_state in result.path():
-#     print(f"Heurística {action}: {rober.heuristic(next_state)}")
-#     print(f"Costo de {action}: {rober.cost(next_state, action)}")
+#     for action, next_state in result.path():
+#         print(f"Heurística {action}: {rober.heuristic(next_state)}")
+#         print(f"Costo de {action}: {rober.cost(next_state, action)}")
+# else:
+#     print("No hay camino")
 
 
 # Greedy
@@ -68,19 +70,15 @@ rober = Rober.Rober(terreno)
 # else:
 #     print("No hay camino")
 
-# CASO DE GREEDY ME DICE QUE LOS MOVIMIENTOS SON 5 CUANDO SON 7 
-# REVISAR CASO DE MOVIMIENTOS
-
-
 # Uniform Cost Search
-# ESTÁ MAL YA QUE ARROJA EL ERROR -> State cannot be None LINE 105
     
-print("Estado inicial:")
-print(rober.initial_state)
-print("Camino encontrado por Uniform Cost Search:")
-result = uniform_cost(rober,True)
-print("Robert está en: " + str(rober.robot_nivel))
-for action, next_state in result.path():
-    print(f"Heurística: {rober.heuristic(next_state)}")
-for action, next_state in result.path():
-    print(f"Costo de {action}: {rober.cost(None, action, next_state)}")
+# print("Estado inicial:")
+# print(rober.initial_state)
+# print("Camino encontrado por Uniform Cost Search:")
+# result = uniform_cost(rober,True)
+# print("Robert está en: " + str(rober.robot_nivel))
+# if result is not None:
+#     print(f"\nNumero de movimientos: {len(result.path()) - 1}")
+#     for action, next_state in result.path():
+#         print(f"Heurística: {rober.heuristic(next_state)}")
+#         print(f"Costo de {action}: {rober.cost(next_state, action)}") 
