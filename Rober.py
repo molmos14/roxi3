@@ -45,15 +45,17 @@ class Rober(ss.SearchProblem):
 
         caracteres = ["R", "#", "*", "-", " "]
 
+        # VERIFICAR LOS CONDICIONALES, SI REALMENTE SON NECESARIOS
         if arriba not in caracteres and arriba != '*' and arriba != '#':
-            if abs(nivel - int(arriba)) <= 1:
+            if arriba != '-' and abs(nivel - int(arriba)) <= 1:
                 acciones.append('⬆')
 
         elif arriba == "-":
             acciones.append('⬆')
 
+        # me lanzó un error -> TypeError: unsupported operand type(s) for -: 'str' and 'int'
         if abajo not in caracteres and abajo != '*' and abajo != '#':
-            if abs(nivel - int(abajo)) <= 1:
+            if abajo != '-' and abs(nivel - int(abajo)) <= 1:
                 acciones.append('⬇')
 
         elif abajo == "-":

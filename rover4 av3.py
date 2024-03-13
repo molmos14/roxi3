@@ -44,16 +44,16 @@ rober = Rober.Rober(terreno)
 
 # A*
 
-print("Estado inicial:")
-print(rober.initial_state)
-print("Camino encontrado por A*:")
-result = astar(rober)
-print("Robert está en: " + str(rober.robot_nivel))
-if result is not None and result.path() != 'NoneType':
-    print(f"\nNumero de movimientos: {len(result.path())-1}")
-for action, next_state in result.path():
-    print(f"Heurística {action}: {rober.heuristic(next_state)}")
-    print(f"Costo de {action}: {rober.cost(next_state, action)}")
+# print("Estado inicial:")
+# print(rober.initial_state)
+# print("Camino encontrado por A*:")
+# result = astar(rober)
+# print("Robert está en: " + str(rober.robot_nivel))
+# if result is not None and result.path() != 'NoneType':
+#     print(f"\nNumero de movimientos: {len(result.path())-1}")
+# for action, next_state in result.path():
+#     print(f"Heurística {action}: {rober.heuristic(next_state)}")
+#     print(f"Costo de {action}: {rober.cost(next_state, action)}")
 
 
 # Greedy
@@ -63,19 +63,24 @@ for action, next_state in result.path():
 # print("Camino encontrado por Greedy:")
 # result = greedy(rober, True)
 # print("Robert está en: " + str(rober.robot_nivel))
-# print(f"\nNumero de movimientos: {len(result.path()) - 1}")
+# if result is not None and result.path() != 'NoneType':
+#     print(f"\nNumero de movimientos: {len(result.path()) - 1}")
+# else:
+#     print("No hay camino")
+
+# CASO DE GREEDY ME DICE QUE LOS MOVIMIENTOS SON 5 CUANDO SON 7 
+# REVISAR CASO DE MOVIMIENTOS
 
 
 # Uniform Cost Search
+# ESTÁ MAL YA QUE ARROJA EL ERROR -> State cannot be None LINE 105
     
-# print("Estado inicial:")
-# print(rober.initial_state)
-# print("Camino encontrado por Uniform Cost Search:")
-# result = uniform_cost(rober,True)
-# print("Robert está en: " + str(rober.robot_nivel))
-# for action, next_state in result.path():
-#     print(f"Heurística: {rober.heuristic(next_state)}")
-# for action, next_state in result.path():
-#     print(f"Costo de {action}: {rober.cost(None, action, next_state)}")
-
-#las diferenciAS CON ROVER3 es la definicion del costo y la imprenta
+print("Estado inicial:")
+print(rober.initial_state)
+print("Camino encontrado por Uniform Cost Search:")
+result = uniform_cost(rober,True)
+print("Robert está en: " + str(rober.robot_nivel))
+for action, next_state in result.path():
+    print(f"Heurística: {rober.heuristic(next_state)}")
+for action, next_state in result.path():
+    print(f"Costo de {action}: {rober.cost(None, action, next_state)}")
