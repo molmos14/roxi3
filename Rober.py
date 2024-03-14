@@ -104,9 +104,9 @@ class Rober(ss.SearchProblem):
 
     def heuristic(self, state):
         # Heurística: distancia euclidiana al estado objetivo
-        print(state)
+        # print(state)
         if not isinstance(state, int):
-            print(state)
+            # print(state)
             goal_x, goal_y, _ = state
             current_x, current_y, _ = (self.robot_x, self.robot_y, self.robot_nivel)
             return math.sqrt((goal_x - current_x) ** 2 + (goal_y - current_y) ** 2)
