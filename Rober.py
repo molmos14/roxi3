@@ -28,7 +28,10 @@ class Rober(ss.SearchProblem):
     def actions(self, state):
         # Devuelve las acciones que se pueden ejecutar en un estado
         acciones = []
-        x, y, nivel = state
+        if state is not None:
+            x, y, nivel = state
+        else:
+            x, y, nivel = self.robot_x, self.robot_y, self.robot_nivel
 
         print("Posición actual: ", x, y, nivel)
         if x - 1 < 0 or x + 1 > self.Terreno.filas or y - 1 < 0 or y + 1 > self.Terreno.columnas:
@@ -100,16 +103,22 @@ class Rober(ss.SearchProblem):
         return acciones
 
     def heuristic(self, state):
-        # Incrementa el costo si el nivel del robot y el nivel del estado objetivo son diferentes
-        goal_x, goal_y, _ = state
-        current_x, current_y, _ = (self.robot_x, self.robot_y, self.robot_nivel)
-        return math.sqrt((goal_x - current_x) ** 2 + (goal_y - current_y) ** 2)
+        # Heurística: distancia euclidiana al estado objetivo
+        print(state)
+        if not isinstance(state, int):
+            print(state)
+            goal_x, goal_y, _ = state
+            current_x, current_y, _ = (self.robot_x, self.robot_y, self.robot_nivel)
+            return math.sqrt((goal_x - current_x) ** 2 + (goal_y - current_y) ** 2)
+        else:
+            return 1
 
     def cost(self, state, action, state2 = None):
         # Incrementa el costo si el nivel del robot y el nivel del estado objetivo son diferentes
-        if state is None:
-            raise ValueError("State cannot be None")
-        x2, y2, _ = self.result(state, action)
+        if state is not None:
+            x2, y2, _ = self.result(state, action)
+        else:
+            x2, y2 = self.robot_x, self.robot_y
         next_level = self.Terreno.matriz[x2][y2]
         current_level = self.robot_nivel
         caracteres_especiales = ["#", "*", "R", "-", " "]
@@ -134,7 +143,10 @@ class Rober(ss.SearchProblem):
 
     def result(self, state, action):
         # Devuelve el estado resultante de ejecutar una acción en un estado
-        x, y, nivel = state
+        if state is not None:
+            x, y, nivel = state
+        else:
+            x, y, nivel = self.robot_x, self.robot_y, self.robot_nivel
 
         if action == '⬆':
             nivel = self.Terreno.matriz[x - 1][y]
@@ -168,3 +180,30 @@ class Rober(ss.SearchProblem):
             pass
         
         return new_state
+    
+    def temperature(self, k):
+        return math.exp(-0.01 * k)
+    
+    def calculate_state_value(self, state):
+        if state is not None:
+            x, y, nivel = state
+            return nivel
+        else:
+            return self.robot_nivel
+    
+    def value(self, state):
+        if state is not None:
+        # Calculate the value of the state
+            value = self.calculate_state_value(state)
+            if isinstance(value, str):
+                # print("Value is a string, cannot compare.")
+                return 0  # or any default value
+            return value
+        else:
+            # print("State is None, cannot calculate value.")
+            return 0  # or any default value
+        
+    def generate_random_state(self):
+    # Generate a random state
+        state = self.colocar_robot()
+        return state

@@ -21,8 +21,8 @@ print("Estado inicial:")
 print(rober.initial_state)
 output = ss.hill_climbing(rober)
 output = ss.hill_climbing_random_restarts(rober,500) #el que corre mejor
-output = ss.simulated_annealing(rober,temperature)
-output = ss.simulated_annealing(rober,_exp_schedule)
+output = ss.simulated_annealing(rober, rober.temperature)
+output = ss.simulated_annealing(rober, rober.heuristic)
 print("Robert está en: " + str(rober.robot_nivel))
 
 #BFS
