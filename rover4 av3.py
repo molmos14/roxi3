@@ -15,15 +15,37 @@ terreno = Terreno.Terreno(15, 30, 0.05, 0.1)
 # Create Rober instance with the terrain as an argument
 rober = Rober.Rober(terreno)
 
-# Búsquedas locales
+# hill_climging
 
 print("Estado inicial:")
 print(rober.initial_state)
-output = ss.hill_climbing(rober)
-output = ss.hill_climbing_random_restarts(rober,500) #el que corre mejor
-output = ss.simulated_annealing(rober, rober.temperature)
-output = ss.simulated_annealing(rober, rober.heuristic)
-print("Robert está en: " + str(rober.robot_nivel))
+print("Camino encontrado por Hill Climbing:")
+result = ss.hill_climbing(rober)
+print("Robert terminó en: " + str(rober.robot_nivel))
+
+# hill_climbing_random_restarts
+
+# print("Estado inicial:")
+# print(rober.initial_state)
+# print("Camino encontrado por Hill Climbing Random Restarts:")
+# result = ss.hill_climbing_random_restarts(rober, 500)
+# print("Robert está en: " + str(rober.robot_nivel))
+
+# simulated_annealing with temperature
+
+# print("Estado inicial:")
+# print(rober.initial_state)
+# print("Camino encontrado por Simulated Annealing:")
+# result = ss.simulated_annealing(rober, rober.temperature)
+# print("Robert terminó en: " + str(rober.robot_nivel))
+
+# simulated_annealing with heuristic
+
+# print("Estado inicial:")
+# print(rober.initial_state)
+# print("Camino encontrado por Simulated Annealing:")
+# result = ss.simulated_annealing(rober, rober.heuristic)
+# print("Robert terminó en: " + str(rober.robot_nivel))
 
 #BFS
 
